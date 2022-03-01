@@ -19,8 +19,8 @@ Where location like '%states%' and continent is not null
 Order by 1,2
 
 
---Looking at Total Cases vs Population
--- Shows what percentage of population got Covid
+-- Looking at Total Cases vs Population
+-- Shows what percentage of population got Covid in the US
 Select location, date, population, total_cases, (total_cases/population)*100 as PercentPopulationInfected
 From PortfolioProject..CovidDeaths
 Where location like '%states%' and continent is not null
@@ -41,14 +41,14 @@ Where continent is not null
 Group by location
 Order by TotalDeathCount desc
 
--- Let's break things down by cintinent
+-- Let's break things down by continent
 Select continent, MAX(total_deaths) as TotalDeathCount
 From PortfolioProject..CovidDeaths
 Where continent is not null
 Group by continent
 Order by TotalDeathCount desc
 
--- Showing continents with the highest death count per population
+-- Showing continents with the highest death count 
 Select location, MAX(total_deaths) as TotalDeathCount
 From PortfolioProject..CovidDeaths
 Where continent is null
@@ -78,7 +78,7 @@ Join PortfolioProject..CovidVaccinations vac
 	and dea.date = vac.date
 Where dea.continent is not null
 )
-Select*, (RollingPeopleVaccinated/population)*100
+Select *, (RollingPeopleVaccinated/population)*100
 From PopvsVac
 
 --TEMP TABLE

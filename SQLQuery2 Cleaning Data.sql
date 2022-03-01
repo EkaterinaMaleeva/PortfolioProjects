@@ -28,7 +28,6 @@ SET SaleDateConverted = CONVERT(Date, SaleDate)
 
 Select *
 From PortfolioProject.dbo.NashvilleHousing
--- Where PropertyAddress is null
 order by ParcelID
 
 Select a.ParcelID, a.PropertyAddress, a.ParcelID, b.PropertyAddress, ISNULL(a.PropertyAddress, b.PropertyAddress)
@@ -58,7 +57,6 @@ From PortfolioProject.dbo.NashvilleHousing
 SELECT 
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) - 1 ) as Address
  , SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress)) as Address
-
 From PortfolioProject.dbo.NashvilleHousing
 
 
@@ -134,18 +132,9 @@ SET SoldAsVacant = CASE When SoldAsVacant = 'Y' THEN 'Yes'
 -- Remove Duplicates
 
 WITH RowNUMCTE AS (
-Select *,
-	ROW_NUMBER() OVER (
-	PARTITION BY ParcelID,
-				PropertyAddress,
-				SalePrice,
-				SaleDate,
-				LegalReference
-				ORDER BY 
-					UniqueID
-					) row_num
+Select *, ROW_NUMBER() OVER (PARTITION BY ParcelID, PropertyAddress, SalePrice, SaleDate, LegalReference
+ORDER BY UniqueID) row_num
 From PortfolioProject.dbo.NashvilleHousing
---order by ParcelID
 )
 DELETE
 From RowNUMCTE

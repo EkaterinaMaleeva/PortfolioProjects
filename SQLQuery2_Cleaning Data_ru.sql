@@ -8,7 +8,7 @@ Select *
 From PortfolioProject.dbo.NashvilleHousing
 -------------------------------------------------------------------------------------------------------------------------
 
--- Стандартизируем формат даты
+-- РЎС‚Р°РЅРґР°СЂС‚РёР·РёСЂСѓРµРј С„РѕСЂРјР°С‚ РґР°С‚С‹
 
 Select SaleDateConverted, CONVERT(Date, SaleDate)
 From PortfolioProject.dbo.NashvilleHousing
@@ -24,7 +24,7 @@ SET SaleDateConverted = CONVERT(Date, SaleDate)
 
 -------------------------------------------------------------------------------------------------------------------------
 
--- Заполним данные Property Address 
+-- Р—Р°РїРѕР»РЅРёРј РґР°РЅРЅС‹Рµ Property Address 
 
 Select *
 From PortfolioProject.dbo.NashvilleHousing
@@ -47,7 +47,7 @@ Where a.PropertyAddress is null
 
 -------------------------------------------------------------------------------------------------------------------------
 
--- Разобьем  Address на отдельные столбцы (Address, City, State)
+-- Р Р°Р·РѕР±СЊРµРј  Address РЅР° РѕС‚РґРµР»СЊРЅС‹Рµ СЃС‚РѕР»Р±С†С‹ (Address, City, State)
 
 Select PropertyAddress
 From PortfolioProject.dbo.NashvilleHousing
@@ -107,7 +107,7 @@ SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',' , '.') , 1)
 
 -------------------------------------------------------------------------------------------------------------------------
 
--- Изменим 'Y' и 'N' на 'Yes' and 'No' в столбце "Sold as Vacant"
+-- РР·РјРµРЅРёРј 'Y' Рё 'N' РЅР° 'Yes' and 'No' РІ СЃС‚РѕР»Р±С†Рµ "Sold as Vacant"
 
 Select Distinct(SoldAsVacant), Count(SoldAsVacant)
 From PortfolioProject.dbo.NashvilleHousing
@@ -129,7 +129,7 @@ SET SoldAsVacant = CASE When SoldAsVacant = 'Y' THEN 'Yes'
 
 -------------------------------------------------------------------------------------------------------------------------
 
--- Удалим повторяющиеся строки
+-- РЈРґР°Р»РёРј РїРѕРІС‚РѕСЂСЏСЋС‰РёРµСЃСЏ СЃС‚СЂРѕРєРё
 
 WITH RowNUMCTE AS (
 Select *,
@@ -152,7 +152,7 @@ Where row_num > 1
 
 -------------------------------------------------------------------------------------------------------------------------
 
--- Удалим ненужные столбцы
+-- РЈРґР°Р»РёРј РЅРµРЅСѓР¶РЅС‹Рµ СЃС‚РѕР»Р±С†С‹
 
 ALTER TABLE PortfolioProject.dbo.NashvilleHousing
 DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress

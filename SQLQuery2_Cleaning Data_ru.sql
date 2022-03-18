@@ -152,7 +152,7 @@ Where row_num > 1
 
 -------------------------------------------------------------------------------------------------------------------------
 
--- Удалим ненужные столбцы
+-- Удалим лишние столбцы
 
 ALTER TABLE PortfolioProject.dbo.NashvilleHousing
 DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress

@@ -1,4 +1,4 @@
--- Выведем данные, которые планируем использовать
+-- Р’С‹РІРµРґРµРј РґР°РЅРЅС‹Рµ, РєРѕС‚РѕСЂС‹Рµ РїР»Р°РЅРёСЂСѓРµРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 
 Select location, date, total_cases, new_cases, total_deaths, population
 From PortfolioProject..CovidDeaths
@@ -6,37 +6,37 @@ Where continent is not null
 Order by 1,2
 
 
--- Посмотрим на Total Cases vs Total Deaths
--- Получим вероятность смерти, если вы находитесь в США
+-- ГЏГ®Г±Г¬Г®ГІГ°ГЁГ¬ Г­Г  Total Cases vs Total Deaths
+-- ГЏГ®Г«ГіГ·ГЁГ¬ ГўГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г±Г¬ГҐГ°ГІГЁ, ГҐГ±Г«ГЁ ГўГ» Г­Г ГµГ®Г¤ГЁГІГҐГ±Гј Гў Г‘ГГЂ
 Select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
 From PortfolioProject..CovidDeaths
 Where location like '%states%' and continent is not null
 Order by 1,2
 
 
--- Посмотрим на Total Cases vs Population
--- Найдем процент населения, который заболел Covid
+-- ГЏГ®Г±Г¬Г®ГІГ°ГЁГ¬ Г­Г  Total Cases vs Population
+-- ГЌГ Г©Г¤ГҐГ¬ ГЇГ°Г®Г¶ГҐГ­ГІ Г­Г Г±ГҐГ«ГҐГ­ГЁГї, ГЄГ®ГІГ®Г°Г»Г© Г§Г ГЎГ®Г«ГҐГ« Covid
 Select location, date, population, total_cases, (total_cases/population)*100 as PercentPopulationInfected
 From PortfolioProject..CovidDeaths
 Where location like '%states%' and continent is not null
 Order by 1,2
 
 
--- Выведем страны с самым высоким показателем заболеваемости (Highest Infection Rate) в сравнении с населением (Population)
+-- Г‚Г»ГўГҐГ¤ГҐГ¬ Г±ГІГ°Г Г­Г» Г± Г±Г Г¬Г»Г¬ ГўГ»Г±Г®ГЄГЁГ¬ ГЇГ®ГЄГ Г§Г ГІГҐГ«ГҐГ¬ Г§Г ГЎГ®Г«ГҐГўГ ГҐГ¬Г®Г±ГІГЁ (Highest Infection Rate) Гў Г±Г°Г ГўГ­ГҐГ­ГЁГЁ Г± Г­Г Г±ГҐГ«ГҐГ­ГЁГҐГ¬ (Population)
 Select location, population, MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population)*100) as PercentPopulationInfected
 From PortfolioProject..CovidDeaths
 Where continent is not null
 Group by location, population
 Order by PercentPopulationInfected desc
 
--- Выведем страны с самым болишим количеством смертей
+-- Г‚Г»ГўГҐГ¤ГҐГ¬ Г±ГІГ°Г Г­Г» Г± Г±Г Г¬Г»Г¬ ГЎГ®Г«ГЁГёГЁГ¬ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ®Г¬ Г±Г¬ГҐГ°ГІГҐГ©
 Select location, MAX(total_deaths) as TotalDeathCount
 From PortfolioProject..CovidDeaths
 Where continent is not null
 Group by location
 Order by TotalDeathCount desc
 
--- Выведем количество смертей по континентам
+-- Г‚Г»ГўГҐГ¤ГҐГ¬ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±Г¬ГҐГ°ГІГҐГ© ГЇГ® ГЄГ®Г­ГІГЁГ­ГҐГ­ГІГ Г¬
 Select continent, MAX(total_deaths) as TotalDeathCount
 From PortfolioProject..CovidDeaths
 Where continent is not null
@@ -44,14 +44,14 @@ Group by continent
 Order by TotalDeathCount desc
 
 
--- Мировые показатели
+-- ГЊГЁГ°Г®ГўГ»ГҐ ГЇГ®ГЄГ Г§Г ГІГҐГ«ГЁ
 Select SUM(new_cases) as total_cases, SUM(new_deaths) as total_deaths, SUM(new_deaths)/SUM(new_cases)*100 as DeathPercentage
 From PortfolioProject..CovidDeaths
 Where continent is not null
 Order by 1,2
 
 
--- Посмотрим на Total Population vs Vaccinations
+-- ГЏГ®Г±Г¬Г®ГІГ°ГЁГ¬ Г­Г  Total Population vs Vaccinations
 
 With PopvsVac (continent, location, date, population, new_vaccinations, RollingPeopleVaccinated)
 as
